@@ -2,7 +2,9 @@ import servers.MultiThreadedServer;
 
 public class Server {
 	public static void main(String[] args) {
-		MultiThreadedServer server = new MultiThreadedServer(9000);
+		int port = Integer.parseInt(args[0]);
+		System.out.println("Start Server on Port" + args[0]);
+		MultiThreadedServer server = new MultiThreadedServer(port);
 		new Thread(server).start();
 
 		try {

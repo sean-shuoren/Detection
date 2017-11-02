@@ -26,6 +26,7 @@ public class WorkerRunnable implements Runnable{
 this.serverText + " - " +
 time +
 "").getBytes());
+            output.flush();
             output.close();
             input.close();
             System.out.println("Request processed: " + time);

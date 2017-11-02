@@ -6,7 +6,7 @@ import java.io.IOException;
 
 public class MultiThreadedServer implements Runnable{
 
-    protected int          serverPort   = 8080;
+    protected int          serverPort   = 9090;
     protected ServerSocket serverSocket = null;
     protected boolean      isStopped    = false;
     protected Thread       runningThread= null;
@@ -58,7 +58,7 @@ public class MultiThreadedServer implements Runnable{
         try {
             this.serverSocket = new ServerSocket(this.serverPort);
         } catch (IOException e) {
-            throw new RuntimeException("Cannot open port 8080", e);
+            throw new RuntimeException("Cannot open port " + this.serverPort, e);
         }
     }
 

@@ -19,24 +19,27 @@ import java.net.SocketTimeoutException;
  *
  */
 public class Client implements Runnable {
-	final static int NUM = 10000;
+	final static int NUM = 10;
+
+	protected int port = 8080;
 
 	// call our constructor to start the program
 	public static void main(String[] args) {
 		for (int i = 0; i < NUM; i++) {
-			Client c = new Client();
+			int port = Integer.parseInt(args[0]);
+			Client c = new Client(port);
 			new Thread(c).start();
 		}
 	}
 
-	public Client() {}
+	public Client(int port) {
+		this.port = port;
+	}
 
 	public void run() {
-		String testServerName = "localhost";
-		int port = 9000;
 		try {
 			// open a socket
-			Socket socket = openSocket(testServerName, port);
+			Socket socket = openSocket("localhost", this.port);
 
 			// write-to, and read-from the socket.
 			// in this case just write a simple command to a web server.
@@ -68,6 +71,7 @@ public class Client implements Runnable {
 				sb.append(str + "\n");
 			}
 			// close the reader, and return the results as a String
+			bufferedWriter.close();
 			bufferedReader.close();
 			return sb.toString();
 
