@@ -7,9 +7,12 @@ port=$RANDOM
 
 java Server $port &> server.log &
 PID=$!
-sleep 1
+jconsole $PID &
+
+sleep 10
 echo $PID
 
 java Client $port &> client.log &
 sleep 1
-jstack $PID > threaddump.log
+# jstack $PID > threaddump.log
+# ./jStackSeries.sh $PID 20 0.01

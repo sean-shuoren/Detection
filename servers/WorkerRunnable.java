@@ -5,6 +5,8 @@ import java.io.OutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  */
 public class WorkerRunnable implements Runnable{
@@ -30,6 +32,13 @@ public class WorkerRunnable implements Runnable{
                 res += c;
             }
 
+            // processing delay
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                // e.printStackTrace();
+            }
+
             output.write(("HTTP/1.1 200 OK\n\nWorkerRunnable: " +
                 this.serverText + " - " +
                 time +
@@ -40,7 +49,7 @@ public class WorkerRunnable implements Runnable{
             // output.close();
             System.out.println("Request processed: " + time + res);
             this.clientSocket.close();
-            
+
         } catch (IOException e) {
             //report exception somewhere.
             e.printStackTrace();

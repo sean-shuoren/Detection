@@ -8,7 +8,7 @@ public class Server {
 		new Thread(server).start();
 
 		try {
-		    Thread.sleep(300 * 1000);
+		    Thread.sleep(60 * 1000);
 		} catch (InterruptedException e) {
 		    e.printStackTrace();
 		}

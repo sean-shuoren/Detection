@@ -11,6 +11,9 @@ import java.net.Socket;
 import java.net.SocketAddress;
 import java.net.SocketTimeoutException;
 
+
+import java.util.Random.*;
+
 /**
  *
  * A complete Java class that demonstrates how to use the Socket
@@ -21,7 +24,7 @@ import java.net.SocketTimeoutException;
  *
  */
 public class Client implements Runnable {
-	final static int NUM = 10;
+	final static int NUM = 100;
 
 	protected int port = 8080;
 
@@ -31,12 +34,6 @@ public class Client implements Runnable {
 			int port = Integer.parseInt(args[0]);
 			Client c = new Client(port);
 			new Thread(c).start();
-
-			// try {
-			//     Thread.sleep(1);
-			// } catch (InterruptedException e) {
-			//     e.printStackTrace();
-			// }
 		}
 	}
 
@@ -45,22 +42,35 @@ public class Client implements Runnable {
 	}
 
 	public void run() {
-		try {
-			// open a socket
-			Socket socket = openSocket("localhost", this.port);
+		int reqNum = 3;
+		while (reqNum-- != 0) {
 
-			// write-to, and read-from the socket.
-			// in this case just write a simple command to a web server.
-			String result = writeToAndReadFromSocket(socket, "GET /\n\n");
+			// delay 'time' milliseconds
+			// int time = rand.nextInt(100) + 500;
+			int time = 500;
+			try {
+			    Thread.sleep(time);
+			} catch (InterruptedException e) {
+			    e.printStackTrace();
+			}
 
-			// print out the result we got back from the server
-			System.out.println(result);
+			try {
+				// open a socket
+				Socket socket = openSocket("localhost", this.port);
 
-			// close the socket, and we're done
-			socket.close();
-		}
-		catch (Exception e) {
-			e.printStackTrace();
+				// write-to, and read-from the socket.
+				// in this case just write a simple command to a web server.
+				String result = writeToAndReadFromSocket(socket, "GET /\n\n");
+
+				// print out the result we got back from the server
+				System.out.println(result);
+
+				// close the socket, and we're done
+				socket.close();
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -82,7 +92,7 @@ public class Client implements Runnable {
 			}
 			// in.close();
 			// out.close();
-			
+
 		} catch (IOException e) {
 			// e.printStackTrace();
 		}
