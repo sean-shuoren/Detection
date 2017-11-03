@@ -5,7 +5,7 @@ javac Client.java
 
 port=$RANDOM
 
-java Server $port &> Server.log &
+java Server $port &> server.log &
 PID=$!
 sleep 1
 echo $PID
