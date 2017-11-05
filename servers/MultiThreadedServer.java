@@ -21,9 +21,10 @@ public class MultiThreadedServer implements Runnable{
         }
         openServerSocket();
         while(! isStopped()){
-            Socket clientSocket = null;
             try {
-                clientSocket = this.serverSocket.accept();
+                Socket clientSocket = this.serverSocket.accept();
+                new Thread(new WorkerRunnable(clientSocket, "Multithreaded Server")).start();
+
             } catch (IOException e) {
                 if(isStopped()) {
                     System.out.println("Server Stopped.") ;
@@ -32,10 +33,7 @@ public class MultiThreadedServer implements Runnable{
                 throw new RuntimeException(
                     "Error accepting client connection", e);
             }
-            new Thread(
-                new WorkerRunnable(
-                    clientSocket, "Multithreaded Server")
-            ).start();
+
         }
         System.out.println("Server Stopped.") ;
     }

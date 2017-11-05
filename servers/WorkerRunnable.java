@@ -1,8 +1,6 @@
 package servers;
 
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
 
 import java.util.concurrent.TimeUnit;
@@ -20,35 +18,48 @@ public class WorkerRunnable implements Runnable{
     }
 
     public void run() {
-        try {
-            InputStream input  = clientSocket.getInputStream();
-            OutputStream output = clientSocket.getOutputStream();
-            long time = System.currentTimeMillis();
+        try (OutputStream output = clientSocket.getOutputStream();
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));){
 
-            int c;
-            String res = "";
-            while ((c = input.read()) != -1) {
-                res += c;
+            long time = System.currentTimeMillis();
+            // System.out.println("here1");
+
+
+            String str;
+            int cnt = 1;
+
+            while ( (str = bufferedReader.readLine()) != null && cnt > 0 ){
+                System.out.println(str);
+                cnt -= 1;
+                // System.out.println("here2");
             }
 
-            // processing delay
+            // System.out.println("here3");
+            
             try {
-                Thread.sleep(2000);
+                Thread.sleep(100); //milliseconds
             } catch (InterruptedException e) {
                 // e.printStackTrace();
             }
 
-            output.write(("HTTP/1.1 200 OK\n\nWorkerRunnable: " +
-                this.serverText + " - " +
-                time +
-                "").getBytes());
-            output.flush();
+            output.write(("OK\nWorkerRunnable: " +
+                this.serverText + " - " +time +"").getBytes());
 
-            // in.close();
-            // output.close();
-            System.out.println("Request processed: " + time + res);
-            this.clientSocket.close();
+            // try {
+            //     Thread.sleep(6000); //milliseconds
+            // } catch (InterruptedException e) {
+            //     // e.printStackTrace();
+            // }
 
+            System.out.println("writing complete");
+
+            try {
+                Thread.sleep(100); //milliseconds
+            } catch (InterruptedException e) {
+                // e.printStackTrace();
+            }
+            clientSocket.close();
+            
         } catch (IOException e) {
             //report exception somewhere.
             e.printStackTrace();
