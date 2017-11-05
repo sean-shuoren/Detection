@@ -1,10 +1,4 @@
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
@@ -47,12 +41,12 @@ public class Client implements Runnable {
 
 			// delay 'time' milliseconds
 			// int time = rand.nextInt(100) + 500;
-			int time = 500;
-			try {
-			    Thread.sleep(time);
-			} catch (InterruptedException e) {
-			    e.printStackTrace();
-			}
+			// int time = 500;
+			// try {
+			//     Thread.sleep(time);
+			// } catch (InterruptedException e) {
+			//     e.printStackTrace();
+			// }
 
 			try {
 				// open a socket
@@ -60,11 +54,11 @@ public class Client implements Runnable {
 
 				// write-to, and read-from the socket.
 				// in this case just write a simple command to a web server.
-				String result = writeToAndReadFromSocket(socket, "GET /\n\n");
+				String result = writeToAndReadFromSocket(socket, "hello\n\n"+"");
 
 				// print out the result we got back from the server
-				System.out.println(result);
-
+				// System.out.println(result);
+				System.out.println("receiving complete");
 				// close the socket, and we're done
 				socket.close();
 			}
@@ -78,25 +72,44 @@ public class Client implements Runnable {
 		int c;
 		String res = "";
 
-		try {
+		// try {
 			// write text to the socket
-			OutputStream out = socket.getOutputStream();
-			byte buf[] = writeTo.getBytes();
-			out.write(buf);
-			out.flush();
+            try {
+                Thread.sleep(1000); //milliseconds
+            } catch (InterruptedException e) {
+                // e.printStackTrace();
+            }
 
+			// BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+			// bufferedWriter.write(writeTo);
+			// bufferedWriter.flush();
+            OutputStream output = socket.getOutputStream();
+            output.write(("hello"+"").getBytes());
+            output.flush();
+            output.close();
+
+			System.out.println("sending complete");
 			// read text from the socket
-			InputStream in = socket.getInputStream();
-			while ((c = in.read()) != -1) {
-				res += (char) c;
-			}
-			// in.close();
-			// out.close();
 
-		} catch (IOException e) {
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            StringBuilder sb = new StringBuilder();
+            String str;
+
+            while ((str = bufferedReader.readLine()) != null) {
+                System.out.println(str);
+                System.out.println("one line");
+                // sb.append(str + "\n");
+            }
+			// close the reader, and return the results as a String
+            System.out.println("wan le");
+			// bufferedWriter.close();
+			bufferedReader.close();
+
+			return sb.toString();
+		// } catch (IOException e) {
 			// e.printStackTrace();
-		}
-		return res;
+		// }
+		// return res;
 	}
 
 	/**

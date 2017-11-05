@@ -1,8 +1,6 @@
 package servers;
 
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
 
 import java.util.concurrent.TimeUnit;
@@ -21,37 +19,48 @@ public class WorkerRunnable implements Runnable{
 
     public void run() {
         try {
-            InputStream input  = clientSocket.getInputStream();
-            OutputStream output = clientSocket.getOutputStream();
+
             long time = System.currentTimeMillis();
+            System.out.println("here1");
 
-            int c;
-            String res = "";
-            while ((c = input.read()) != -1) {
-                res += c;
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            StringBuilder sb = new StringBuilder();
+            String str;
+
+            while ((str = bufferedReader.readLine()) != null) {
+                System.out.println(str);
+                // sb.append(str + "\n");
             }
-
-            // processing delay
+            bufferedReader.close();
+            System.out.println("here2");
+            
             try {
-                Thread.sleep(2000);
+                Thread.sleep(1000); //milliseconds
             } catch (InterruptedException e) {
                 // e.printStackTrace();
             }
 
+            OutputStream output = clientSocket.getOutputStream();
             output.write(("HTTP/1.1 200 OK\n\nWorkerRunnable: " +
                 this.serverText + " - " +
                 time +
                 "").getBytes());
-            output.flush();
 
+            // try {
+            //     Thread.sleep(6000); //milliseconds
+            // } catch (InterruptedException e) {
+            //     // e.printStackTrace();
+            // }
+            output.flush();
+            output.close();
+            System.out.println("writing complete");
             // in.close();
             // output.close();
-            System.out.println("Request processed: " + time + res);
-            this.clientSocket.close();
+            clientSocket.close();
 
         } catch (IOException e) {
             //report exception somewhere.
-            e.printStackTrace();
+            // e.printStackTrace();
         }
     }
 }
