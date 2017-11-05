@@ -24,7 +24,7 @@ import java.util.Random.*;
  *
  */
 public class Client implements Runnable {
-	final static int NUM = 100;
+	final static int NUM = 10;
 
 	protected int port = 8080;
 

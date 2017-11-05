@@ -27,8 +27,7 @@ public class WorkerRunnable implements Runnable{
 
             int c;
             String res = "";
-            InputStream in = socket.getInputStream();
-            while ((c = in.read()) != -1) {
+            while ((c = input.read()) != -1) {
                 res += c;
             }
 
