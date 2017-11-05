@@ -18,49 +18,51 @@ public class WorkerRunnable implements Runnable{
     }
 
     public void run() {
-        try {
+        try (OutputStream output = clientSocket.getOutputStream();
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));){
 
             long time = System.currentTimeMillis();
-            System.out.println("here1");
+            // System.out.println("here1");
 
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            StringBuilder sb = new StringBuilder();
+
             String str;
+            int cnt = 1;
 
-            while ((str = bufferedReader.readLine()) != null) {
+            while ( (str = bufferedReader.readLine()) != null && cnt > 0 ){
                 System.out.println(str);
-                // sb.append(str + "\n");
+                cnt -= 1;
+                // System.out.println("here2");
             }
-            bufferedReader.close();
-            System.out.println("here2");
+
+            // System.out.println("here3");
             
             try {
-                Thread.sleep(1000); //milliseconds
+                Thread.sleep(500); //milliseconds
             } catch (InterruptedException e) {
                 // e.printStackTrace();
             }
 
-            OutputStream output = clientSocket.getOutputStream();
-            output.write(("HTTP/1.1 200 OK\n\nWorkerRunnable: " +
-                this.serverText + " - " +
-                time +
-                "").getBytes());
+            output.write(("OK\nWorkerRunnable: " +
+                this.serverText + " - " +time +"").getBytes());
 
             // try {
             //     Thread.sleep(6000); //milliseconds
             // } catch (InterruptedException e) {
             //     // e.printStackTrace();
             // }
-            output.flush();
-            output.close();
-            System.out.println("writing complete");
-            // in.close();
-            // output.close();
-            clientSocket.close();
 
+            System.out.println("writing complete");
+
+            try {
+                Thread.sleep(500); //milliseconds
+            } catch (InterruptedException e) {
+                // e.printStackTrace();
+            }
+            clientSocket.close();
+            
         } catch (IOException e) {
             //report exception somewhere.
-            // e.printStackTrace();
+            e.printStackTrace();
         }
     }
 }

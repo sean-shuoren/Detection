@@ -27,6 +27,13 @@ public class Client implements Runnable {
 		for (int i = 0; i < NUM; i++) {
 			int port = Integer.parseInt(args[0]);
 			Client c = new Client(port);
+
+			try {
+			    Thread.sleep(500);
+			} catch (InterruptedException e) {
+			    e.printStackTrace();
+			}	
+
 			new Thread(c).start();
 		}
 	}
@@ -58,7 +65,6 @@ public class Client implements Runnable {
 
 				// print out the result we got back from the server
 				// System.out.println(result);
-				System.out.println("receiving complete");
 				// close the socket, and we're done
 				socket.close();
 			}
@@ -72,44 +78,38 @@ public class Client implements Runnable {
 		int c;
 		String res = "";
 
-		// try {
+		try (PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+			 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));){
 			// write text to the socket
             try {
-                Thread.sleep(1000); //milliseconds
+                Thread.sleep(500); //milliseconds
             } catch (InterruptedException e) {
                 // e.printStackTrace();
             }
 
-			// BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-			// bufferedWriter.write(writeTo);
-			// bufferedWriter.flush();
-            OutputStream output = socket.getOutputStream();
-            output.write(("hello"+"").getBytes());
-            output.flush();
-            output.close();
+            out.println("sa wa di ca\nbye\n"+"");
 
 			System.out.println("sending complete");
 			// read text from the socket
 
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            
             StringBuilder sb = new StringBuilder();
             String str;
 
             while ((str = bufferedReader.readLine()) != null) {
                 System.out.println(str);
-                System.out.println("one line");
+                // System.out.println("one line");
                 // sb.append(str + "\n");
             }
-			// close the reader, and return the results as a String
-            System.out.println("wan le");
-			// bufferedWriter.close();
-			bufferedReader.close();
+
+            System.out.println("receiving complete");
+
 
 			return sb.toString();
-		// } catch (IOException e) {
-			// e.printStackTrace();
-		// }
-		// return res;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return "qi guai";
 	}
 
 	/**
