@@ -37,7 +37,7 @@ public class WorkerRunnable implements Runnable{
             // System.out.println("here3");
             
             try {
-                Thread.sleep(500); //milliseconds
+                Thread.sleep(100); //milliseconds
             } catch (InterruptedException e) {
                 // e.printStackTrace();
             }
@@ -54,7 +54,7 @@ public class WorkerRunnable implements Runnable{
             System.out.println("writing complete");
 
             try {
-                Thread.sleep(500); //milliseconds
+                Thread.sleep(100); //milliseconds
             } catch (InterruptedException e) {
                 // e.printStackTrace();
             }

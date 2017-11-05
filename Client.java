@@ -20,7 +20,7 @@ import java.util.Random.*;
 public class Client implements Runnable {
 	final static int NUM = 10;
 
-	protected int port = 8080;
+	protected int port;
 
 	// call our constructor to start the program
 	public static void main(String[] args) {
@@ -82,12 +82,12 @@ public class Client implements Runnable {
 			 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));){
 			// write text to the socket
             try {
-                Thread.sleep(500); //milliseconds
+                Thread.sleep(100); //milliseconds
             } catch (InterruptedException e) {
                 // e.printStackTrace();
             }
 
-            out.println("sa wa di ca\nbye\n"+"");
+            out.println("sa wa di ka\nbye\n"+"");
 
 			System.out.println("sending complete");
 			// read text from the socket
