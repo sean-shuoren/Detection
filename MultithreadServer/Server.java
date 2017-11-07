@@ -1,5 +1,3 @@
-import servers.MultiThreadedServer;
-
 public class Server {
 	public static void main(String[] args) {
 		int port = Integer.parseInt(args[0]);
@@ -8,7 +6,7 @@ public class Server {
 		new Thread(server).start();
 
 		try {
-		    Thread.sleep(60 * 1000);
+		    Thread.sleep(300 * 1000);
 		} catch (InterruptedException e) {
 		    e.printStackTrace();
 		}
