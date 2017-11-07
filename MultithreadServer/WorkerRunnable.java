@@ -1,6 +1,6 @@
 import java.io.*;
 import java.net.Socket;
-
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -9,10 +9,11 @@ public class WorkerRunnable implements Runnable{
 
     protected Socket clientSocket = null;
     protected String serverText   = null;
-
+    private Random rand;
     public WorkerRunnable(Socket clientSocket, String serverText) {
         this.clientSocket = clientSocket;
         this.serverText   = serverText;
+        this.rand = new Random(0);
     }
 
     public void run() {
@@ -40,8 +41,13 @@ public class WorkerRunnable implements Runnable{
                 // e.printStackTrace();
             }
 
+            int sum = 0;
+            for(int i = 0; i < 10000000; i++){
+                sum += this.rand.nextInt(20) - 10;
+            }
+
             output.write(("OK\nWorkerRunnable: " +
-                this.serverText + " - " +time +"").getBytes());
+                this.serverText + " - " + Integer.toString(sum)).getBytes());
 
             // try {
             //     Thread.sleep(6000); //milliseconds

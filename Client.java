@@ -6,7 +6,7 @@ import java.net.SocketAddress;
 import java.net.SocketTimeoutException;
 
 
-import java.util.Random.*;
+import java.util.Random;
 
 /**
  *
@@ -18,10 +18,10 @@ import java.util.Random.*;
  *
  */
 public class Client implements Runnable {
-	final static int NUM = 10;
+	final static int NUM = 50;
 
 	protected int port;
-
+	private Random rand;
 	// call our constructor to start the program
 	public static void main(String[] args) {
 		for (int i = 0; i < NUM; i++) {
@@ -40,6 +40,7 @@ public class Client implements Runnable {
 
 	public Client(int port) {
 		this.port = port;
+		rand = new Random(0);
 	}
 
 	public void run() {
@@ -47,13 +48,12 @@ public class Client implements Runnable {
 		while (reqNum-- != 0) {
 
 			// delay 'time' milliseconds
-			// int time = rand.nextInt(100) + 500;
-			// int time = 500;
-			// try {
-			//     Thread.sleep(time);
-			// } catch (InterruptedException e) {
-			//     e.printStackTrace();
-			// }
+			int time = rand.nextInt(100) + 500;
+			try {
+			    Thread.sleep(time);
+			} catch (InterruptedException e) {
+			    e.printStackTrace();
+			}
 
 			try {
 				// open a socket
