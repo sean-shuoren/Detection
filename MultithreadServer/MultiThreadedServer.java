@@ -1,6 +1,8 @@
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.io.IOException;
+import java.util.concurrent.ExecutorService;  
+import java.util.concurrent.Executors;
 
 public class MultiThreadedServer implements Runnable{
 
@@ -11,6 +13,7 @@ public class MultiThreadedServer implements Runnable{
 
     public MultiThreadedServer(int port){
         this.serverPort = port;
+
     }
 
     public void run(){
@@ -18,10 +21,12 @@ public class MultiThreadedServer implements Runnable{
             this.runningThread = Thread.currentThread();
         }
         openServerSocket();
+        ExecutorService pool = Executors.newFixedThreadPool(5);
+
         while(! isStopped()){
             try {
                 Socket clientSocket = this.serverSocket.accept();
-                new Thread(new WorkerRunnable(clientSocket, "Multithreaded Server")).start();
+                pool.execute(new WorkerRunnable(clientSocket, "Thread Pool Server"));
 
             } catch (IOException e) {
                 if(isStopped()) {
@@ -33,6 +38,11 @@ public class MultiThreadedServer implements Runnable{
             }
 
         }
+
+        pool.shutdown();
+        while (!pool.isTerminated()) {   }
+
+        System.out.println("Pool Stopped.") ;
         System.out.println("Server Stopped.") ;
     }
 
