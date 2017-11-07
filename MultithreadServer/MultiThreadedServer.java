@@ -52,7 +52,9 @@ public class MultiThreadedServer implements Runnable{
     }
 
     public synchronized void stop(){
-        this.isStopped = true;
+        synchronized(this){
+            this.isStopped = true;
+	}
         try {
             this.serverSocket.close();
         } catch (IOException e) {
