@@ -27,12 +27,7 @@ public class Client implements Runnable {
 		for (int i = 0; i < NUM; i++) {
 			int port = Integer.parseInt(args[0]);
 			Client c = new Client(port);
-
-			try {
-			    Thread.sleep(500);
-			} catch (InterruptedException e) {
-			    e.printStackTrace();
-			}	
+	
 
 			new Thread(c).start();
 		}
@@ -48,7 +43,7 @@ public class Client implements Runnable {
 		while (reqNum-- != 0) {
 
 			// delay 'time' milliseconds
-			int time = rand.nextInt(100) + 500;
+			int time = rand.nextInt(50);
 			try {
 			    Thread.sleep(time);
 			} catch (InterruptedException e) {
@@ -56,6 +51,8 @@ public class Client implements Runnable {
 			}
 
 			try {
+				long t0 = System.nanoTime();
+
 				// open a socket
 				Socket socket = openSocket("localhost", this.port);
 
@@ -67,6 +64,9 @@ public class Client implements Runnable {
 				// System.out.println(result);
 				// close the socket, and we're done
 				socket.close();
+
+				long t1 = System.nanoTime();
+				System.out.printf("Duration: %d\n", t1-t0);
 			}
 			catch (Exception e) {
 				e.printStackTrace();
