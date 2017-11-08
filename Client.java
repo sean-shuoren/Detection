@@ -21,7 +21,7 @@ public class Client implements Runnable {
 	final static int NUM = 50;
 
 	protected int port;
-    private Random rand;
+	private Random rand;
 	// call our constructor to start the program
 	public static void main(String[] args) {
 		for (int i = 0; i < NUM; i++) {
@@ -35,7 +35,7 @@ public class Client implements Runnable {
 
 	public Client(int port) {
 		this.port = port;
-		this.rand = new Random(0);
+		rand = new Random(0);
 	}
 
 	public void run() {
@@ -51,6 +51,8 @@ public class Client implements Runnable {
 			}
 
 			try {
+				long t0 = System.currentTimeMillis();
+
 				// open a socket
 				Socket socket = openSocket("localhost", this.port);
 
@@ -62,6 +64,9 @@ public class Client implements Runnable {
 				// System.out.println(result);
 				// close the socket, and we're done
 				socket.close();
+
+				long t1 = System.currentTimeMillis();
+				System.out.printf("milliseconds: %d\n", t1-t0);
 			}
 			catch (Exception e) {
 				e.printStackTrace();
