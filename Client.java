@@ -4,19 +4,8 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
 import java.net.SocketTimeoutException;
-
-
 import java.util.Random;
 
-/**
- *
- * A complete Java class that demonstrates how to use the Socket
- * class, specifically how to open a socket, write to the socket,
- * and read from the socket.
- *
- * @author alvin alexander, alvinalexander.com.
- *
- */
 public class Client implements Runnable {
 	final static int NUM = 50;
 
