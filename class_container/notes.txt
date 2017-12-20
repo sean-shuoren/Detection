@@ -1,0 +1,8 @@
+javac does not check unused import,
+
+Eclipse provide checks for
+unused import
+
+Unused object allocation:
+if (name == null)
+   new IllegalArgumentException();

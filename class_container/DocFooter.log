@@ -1,0 +1,63 @@
+Compiled from "DocFooter.java"
+public class DocFooter extends java.applet.Applet {
+  java.lang.String date;
+
+  java.lang.String email;
+
+  DocFooter();
+    Code:
+       0: aload_0       
+       1: invokespecial #1                  // Method java/applet/Applet."<init>":()V
+       4: getstatic     #2                  // Field java/lang/System.out:Ljava/io/PrintStream;
+       7: ldc           #3                  // String DocFooter is created
+       9: invokevirtual #4                  // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+      12: return        
+
+  public void output();
+    Code:
+       0: getstatic     #2                  // Field java/lang/System.out:Ljava/io/PrintStream;
+       3: ldc           #5                  // String Output is invoked
+       5: invokevirtual #4                  // Method java/io/PrintStream.println:(Ljava/lang/String;)V
+       8: return        
+
+  public void init();
+    Code:
+       0: aload_0       
+       1: sipush        500
+       4: bipush        100
+       6: invokevirtual #6                  // Method resize:(II)V
+       9: aload_0       
+      10: aload_0       
+      11: ldc           #7                  // String LAST_UPDATED
+      13: invokevirtual #8                  // Method getParameter:(Ljava/lang/String;)Ljava/lang/String;
+      16: putfield      #9                  // Field date:Ljava/lang/String;
+      19: aload_0       
+      20: aload_0       
+      21: ldc           #10                 // String EMAIL
+      23: invokevirtual #8                  // Method getParameter:(Ljava/lang/String;)Ljava/lang/String;
+      26: putfield      #11                 // Field email:Ljava/lang/String;
+      29: return        
+
+  public void paint(java.awt.Graphics);
+    Code:
+       0: aload_1       
+       1: new           #12                 // class java/lang/StringBuilder
+       4: dup           
+       5: invokespecial #13                 // Method java/lang/StringBuilder."<init>":()V
+       8: aload_0       
+       9: getfield      #9                  // Field date:Ljava/lang/String;
+      12: invokevirtual #14                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      15: ldc           #15                 // String  by 
+      17: invokevirtual #14                 // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+      20: invokevirtual #16                 // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+      23: bipush        100
+      25: bipush        15
+      27: invokevirtual #17                 // Method java/awt/Graphics.drawString:(Ljava/lang/String;II)V
+      30: aload_1       
+      31: aload_0       
+      32: getfield      #11                 // Field email:Ljava/lang/String;
+      35: sipush        290
+      38: bipush        15
+      40: invokevirtual #17                 // Method java/awt/Graphics.drawString:(Ljava/lang/String;II)V
+      43: return        
+}

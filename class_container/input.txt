@@ -1,0 +1,8 @@
+files
+	MainEntry.log
+	MammalInt.log
+classes
+	class MammalInt
+	init
+	class DocFooter
+	init
